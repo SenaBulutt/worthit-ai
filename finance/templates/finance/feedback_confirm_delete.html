@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow border-danger">
+            <div class="card-body">
+                <h3>Geri Bildirimi Sil</h3>
+
+                <p>
+                    <strong>{{ feedback.title }}</strong> başlıklı geri bildirimi silmek istediğine emin misin?
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger">Evet, Sil</button>
+                    <a href="{% url 'feedback_list' %}" class="btn btn-outline-dark">Vazgeç</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

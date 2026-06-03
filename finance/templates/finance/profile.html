@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="mb-4">Profil Bilgileri</h3>
+                <div class="alert alert-warning">
+    Harcama analizi yapabilmek için aylık gelir ve haftalık çalışma saati bilgilerini doldurmalısın.
+</div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <button class="btn btn-dark w-100">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

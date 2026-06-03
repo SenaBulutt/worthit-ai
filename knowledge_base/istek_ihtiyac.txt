@@ -1,0 +1,11 @@
+Başlık: İstek ve İhtiyaç Ayrımı
+Konu: Harcama kararı
+Anahtar Kelimeler: istek, ihtiyaç, karar, öncelik, bütçe
+
+İhtiyaç harcamaları yaşamı sürdürmek, eğitim veya temel sorumlulukları yerine getirmek için gerekli olan harcamalardır. İstek harcamaları ise yaşam kalitesini artırabilir ancak çoğu zaman ertelenebilir.
+
+Ne zaman kullanılır?
+Kullanıcı bir harcamayı ihtiyaç olarak işaretlemediyse veya ürün eğlence, giyim, teknoloji gibi ertelenebilir kategorilerdeyse kullanılır.
+
+Öneri:
+Kullanıcıya bu harcamanın gerçekten zorunlu olup olmadığını sorgulaması, daha düşük fiyatlı alternatifleri incelemesi ve harcamayı bütçe hedefleriyle karşılaştırması önerilir.

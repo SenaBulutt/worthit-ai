@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Harcama Detayı</h2>
+        <p class="text-muted">
+            WorthIt AI finansal analiz sonucu
+        </p>
+    </div>
+
+    <div>
+        <a href="{% url 'purchase_update' purchase.id %}"
+           class="btn btn-outline-primary">
+            Düzenle
+        </a>
+
+        <a href="{% url 'purchase_delete' purchase.id %}"
+           class="btn btn-outline-danger">
+            Sil
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">Ürün</h6>
+                <h4>{{ purchase.item_name }}</h4>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">Kategori</h6>
+                <h4>{{ purchase.category }}</h4>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">Fiyat</h6>
+                <h4>{{ purchase.price }} TL</h4>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">Risk Seviyesi</h6>
+
+                {% if purchase.risk_level == "high" %}
+                    <span class="badge bg-danger fs-6">
+                        Yüksek
+                    </span>
+
+                {% elif purchase.risk_level == "medium" %}
+                    <span class="badge bg-warning text-dark fs-6">
+                        Orta
+                    </span>
+
+                {% else %}
+                    <span class="badge bg-success fs-6">
+                        Düşük
+                    </span>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">Gelire Oran</h6>
+                <h4>%{{ purchase.income_ratio }}</h4>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">Çalışma Süresi</h6>
+                <h4>{{ purchase.work_hours_needed }} saat</h4>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">Benzer Harcama Sayısı</h6>
+                <h4>{{ purchase.similar_category_count }}</h4>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">İhtiyaç Durumu</h6>
+
+                {% if purchase.is_need %}
+                    <span class="badge bg-primary fs-6">
+                        İhtiyaç
+                    </span>
+                {% else %}
+                    <span class="badge bg-secondary fs-6">
+                        İstek
+                    </span>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+        <h4 class="mb-3">
+            WorthIt Score
+        </h4>
+
+        {% if purchase.worthit_score >= 70 %}
+
+            <h1 class="text-success">
+                {{ purchase.worthit_score }}/100
+            </h1>
+
+            <p>
+                Bu harcama bütçene göre daha mantıklı görünüyor.
+            </p>
+
+        {% elif purchase.worthit_score >= 40 %}
+
+            <h1 class="text-warning">
+                {{ purchase.worthit_score }}/100
+            </h1>
+
+            <p>
+                Bu harcamada dikkatli karar vermelisin.
+            </p>
+
+        {% else %}
+
+            <h1 class="text-danger">
+                {{ purchase.worthit_score }}/100
+            </h1>
+
+            <p>
+                Bu harcama şu an bütçen için riskli görünüyor.
+            </p>
+
+        {% endif %}
+
+    </div>
+</div>
+        <h4 class="mb-3">
+            AI Finansal Yorumu
+        </h4>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h4 class="mb-3">Finansal Karar Asistanı</h4>
+
+        <p class="text-muted">
+            Bu harcamayla ilgili aklına takılan soruyu sorabilirsin.
+        </p>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            <button type="button" class="btn btn-outline-dark btn-sm"
+                    onclick="fillQuestion('Bu ürünü şimdi satın almalı mıyım?')">
+                Bu ürünü şimdi satın almalı mıyım?
+            </button>
+
+            <button type="button" class="btn btn-outline-dark btn-sm"
+                    onclick="fillQuestion('Bu harcamayı ertelemek mantıklı mı?')">
+                Bu harcamayı ertelemek mantıklı mı?
+            </button>
+
+            <button type="button" class="btn btn-outline-dark btn-sm"
+                    onclick="fillQuestion('Daha ekonomik bir alternatif aramalı mıyım?')">
+                Daha ekonomik alternatif var mı?
+            </button>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <textarea
+                id="questionInput"
+                name="question"
+                rows="3"
+                placeholder="Örn: Bu ürünü almak yerine 1 ay beklemeli miyim?"
+            >{{ question }}</textarea>
+
+            <button class="btn btn-dark mt-3">
+                AI’dan Yanıt Al
+            </button>
+        </form>
+
+        {% if answer %}
+            <div class="ai-comment-box mt-4">
+                {{ answer|linebreaks }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function fillQuestion(text) {
+    document.getElementById("questionInput").value = text;
+}
+</script>
+        
+            {{ purchase.ai_comment|linebreaks }}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

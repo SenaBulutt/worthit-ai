@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Anasayfa</h2>
+        <p class="text-muted">WorthIt AI harcama karar panelin</p>
+    </div>
+
+    <div>
+        <a href="{% url 'purchase_add' %}" class="btn btn-dark">
+            Harcama Analizi Ekle
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Aylık Gelir</h6>
+                <h3>{{ profile.monthly_income }} TL</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Toplam Analiz</h6>
+                <h3>{{ total_checks }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Yüksek Riskli Harcama</h6>
+                <h3>{{ high_risk_count }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Toplam Harcama</h6>
+                <h3>{{ total_spending }} TL</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">En Çok Kullanılan Kategori</h6>
+                <h3>
+                    {% if most_used_category %}
+                        {{ most_used_category.category__name }}
+                    {% else %}
+                        Yok
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Yüksek Risk Oranı</h6>
+                <h3>%{{ high_risk_percentage }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+        <h4 class="mb-3">AI Finansal Profilin</h4>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Harcama Karakteri</h6>
+                <h5>{{ financial_personality }}</h5>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Risk Eğilimi</h6>
+                <h5>{{ most_common_risk }}</h5>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">AI Önerisi</h6>
+                <p class="mb-0">
+                    Harcamalarını düzenli takip et, yüksek riskli harcamalarda satın almadan önce kararını tekrar değerlendir.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Kategori Dağılımı</h5>
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Risk Dağılımı</h5>
+                <canvas id="riskChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    Chart.defaults.color = "#cbd5e1";
+    Chart.defaults.font.family = "Inter";
+
+    const categoryCtx = document.getElementById("categoryChart");
+
+    new Chart(categoryCtx, {
+        type: "doughnut",
+
+        data: {
+            labels: {{ category_labels|safe }},
+
+            datasets: [{
+                data: {{ category_data|safe }},
+
+                backgroundColor: [
+                    "#6366f1",
+                    "#8b5cf6",
+                    "#ec4899",
+                    "#06b6d4",
+                    "#10b981",
+                    "#f59e0b",
+                    "#ef4444",
+                    "#3b82f6",
+                ],
+
+                borderWidth: 0,
+                hoverOffset: 18
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    position: "bottom",
+
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        pointStyle: "circle"
+                    }
+                }
+            },
+
+            cutout: "68%"
+        }
+    });
+
+    const riskCtx = document.getElementById("riskChart");
+
+    new Chart(riskCtx, {
+        type: "bar",
+
+        data: {
+            labels: {{ risk_labels|safe }},
+
+            datasets: [{
+                label: "Risk Sayısı",
+
+                data: {{ risk_data|safe }},
+
+                backgroundColor: [
+                    "#22c55e",
+                    "#facc15",
+                    "#ef4444"
+                ],
+
+                borderRadius: 18,
+                borderSkipped: false
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+
+            scales: {
+                y: {
+                    grid: {
+                        color: "rgba(255,255,255,0.06)"
+                    },
+
+                    ticks: {
+                        color: "#94a3b8"
+                    }
+                },
+
+                x: {
+                    grid: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: "#cbd5e1"
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

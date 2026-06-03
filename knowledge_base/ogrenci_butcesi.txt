@@ -1,0 +1,11 @@
+Başlık: Öğrenci Bütçesi Yönetimi
+Konu: Öğrenci finansı
+Anahtar Kelimeler: öğrenci, bütçe, harçlık, gelir, gider, tasarruf
+
+Öğrenciler için bütçe yönetiminde temel amaç sınırlı geliri öncelikli ihtiyaçlara göre planlamaktır. Yemek, ulaşım, eğitim materyalleri ve barınma gibi giderler öncelikli kabul edilir. İstek harcamaları için haftalık veya aylık limit belirlemek bütçe kontrolünü kolaylaştırır.
+
+Ne zaman kullanılır?
+Kullanıcı profilinde öğrenci olarak görünüyorsa veya gelir seviyesi düşük/orta düzeydeyse kullanılır.
+
+Öneri:
+Kullanıcıya harcamalarını haftalık olarak takip etmesi, küçük harcamaların toplam etkisini görmesi ve özellikle istek kategorilerinde limit belirlemesi önerilir.

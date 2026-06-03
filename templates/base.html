@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>WorthIt AI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #eef2f7;
+            --card: rgba(255, 255, 255, 0.78);
+            --text: #0f172a;
+            --muted: #64748b;
+            --nav: rgba(15, 23, 42, 0.96);
+            --border: rgba(148, 163, 184, 0.25);
+            --input: #ffffff;
+            --shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+        }
+
+        body.dark-mode {
+            --bg: #020617;
+            --card: rgba(15, 23, 42, 0.78);
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+            --nav: rgba(2, 6, 23, 0.96);
+            --border: rgba(148, 163, 184, 0.18);
+            --input: rgba(15, 23, 42, 0.9);
+            --shadow: 0 20px 55px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(99,102,241,0.18), transparent 32%),
+                radial-gradient(circle at top right, rgba(14,165,233,0.14), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--nav) !important;
+            backdrop-filter: blur(16px);
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 28px;
+            letter-spacing: -1px;
+        }
+
+        .container {
+            max-width: 1220px;
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: var(--text);
+            font-weight: 800;
+            letter-spacing: -0.8px;
+        }
+
+        .text-muted {
+            color: var(--muted) !important;
+        }
+
+        .card {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            transition: 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-body {
+            padding: 26px;
+        }
+
+        .btn {
+            border-radius: 14px;
+            padding: 10px 18px;
+            font-weight: 700;
+        }
+
+        .btn-dark {
+            background: linear-gradient(135deg, #111827, #312e81);
+            border: none;
+        }
+
+        .theme-btn {
+            border: 1px solid rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.08);
+            color: white;
+        }
+
+        .theme-btn:hover {
+            background: rgba(255,255,255,0.18);
+            color: white;
+        }
+
+        table {
+            color: var(--text) !important;
+        }
+
+        .table {
+            --bs-table-bg: transparent;
+            --bs-table-color: var(--text);
+            --bs-table-hover-bg: rgba(99,102,241,0.08);
+        }
+
+        .table thead {
+            background: rgba(99,102,241,0.08);
+        }
+
+        .badge {
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+        }
+
+        label {
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: var(--input);
+            color: var(--text);
+            margin-top: 4px;
+            margin-bottom: 18px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 4px rgba(129,140,248,0.18);
+            outline: none;
+        }
+
+        body.dark-mode input,
+        body.dark-mode select,
+        body.dark-mode textarea {
+            color-scheme: dark;
+        }
+
+        .alert {
+            border-radius: 18px;
+            border: none;
+        }
+
+        canvas {
+            max-height: 320px;
+        }
+        .ai-comment-box {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 28px;
+}
+.btn-outline-dark {
+    color: var(--text);
+    border-color: var(--border);
+}
+
+body.dark-mode .btn-outline-dark {
+    color: #e5e7eb;
+    border-color: #64748b;
+}
+
+body.dark-mode .btn-outline-dark:hover {
+    background: #e5e7eb;
+    color: #020617;
+}
+input[type="checkbox"] {
+    appearance: none;
+    width: 58px;
+    height: 30px;
+    background: #1e293b;
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 12px;
+    margin-bottom: 0;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    top: 2px;
+    left: 3px;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+input[type="checkbox"]:checked::before {
+    transform: translateX(26px);
+}
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 24px;
+}
+
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100"></body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
+
+    <div style="
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #7c5cff, #4da8ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 20px;
+        box-shadow: 0 0 20px rgba(124,92,255,0.45);
+    ">
+        W
+    </div>
+
+    <div>
+        <div style="
+            font-size: 26px;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        ">
+            WorthIt AI
+        </div>
+
+        <div class="d-flex align-items-center"></div>
+    </div>
+
+</a>
+
+        <div class="d-flex gap-2 align-items-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm">Ana Sayfa</a>
+                <a href="{% url 'profile' %}" class="btn btn-outline-light btn-sm">Profil</a>
+                <a href="{% url 'feedback_list' %}" class="btn btn-outline-light btn-sm">Yorumlar</a>
+                <a href="{% url 'purchase_list' %}" class="btn btn-outline-light btn-sm">Analizler</a>
+
+                <button type="button" id="themeToggle" class="btn btn-sm theme-btn">
+                    🌙 Mod
+                </button>
+
+                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning btn-sm">Çıkış Yap</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Giriş Yap</a>
+                <a href="{% url 'register' %}" class="btn btn-warning btn-sm">Kayıt Ol</a>
+
+                <button type="button" id="themeToggle" class="btn btn-sm theme-btn">
+                    🌙 Mod
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5 mb-5 flex-grow-1">
+    {% block content %}
+    {% endblock %}
+</div>
+<footer class="text-center py-4 mt-auto w-100">
+    <small class="text-muted">
+        © 2026 WorthIt AI · Akıllı harcama analizi ve finansal karar destek sistemi
+    </small>
+</footer>
+<script>
+    const themeButton = document.getElementById("themeToggle");
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeButton.innerText = "☀️ Mod";
+    }
+
+    themeButton.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+
+        if (document.body.classList.contains("dark-mode")) {
+            localStorage.setItem("theme", "dark");
+            themeButton.innerText = "☀️ Mod";
+        } else {
+            localStorage.setItem("theme", "light");
+            themeButton.innerText = "🌙 Mod";
+        }
+    });
+</script>
+
+</body>
+</html>

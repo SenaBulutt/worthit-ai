@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow border-danger">
+            <div class="card-body">
+                <h3 class="mb-3">Harcama Analizini Sil</h3>
+
+                <p>
+                    <strong>{{ purchase.item_name }}</strong> adlı harcama analizini silmek istediğine emin misin?
+                </p>
+
+                <p class="text-muted">
+                    Bu işlem geri alınamaz.
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <button class="btn btn-danger">
+                        Evet, Sil
+                    </button>
+
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-dark">
+                        Vazgeç
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
