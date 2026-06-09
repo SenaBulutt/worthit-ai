@@ -11,6 +11,7 @@ Sistem;
 - Harcama riski hesaplar
 - WorthIt skoru üretir
 - Finansal öneriler sunar
+- E-posta doğrulamalı şifre sıfırlar
 - Yapay zeka destekli yorum oluşturur
 - Harcama hakkında soru-cevap desteği sağlar
 
@@ -24,6 +25,7 @@ Sistem;
 - Bootstrap 5
 - JavaScript
 - Groq API (Llama 3.3 70B)
+- Gmail SMTP
 
 ## Kurulum
 
@@ -37,8 +39,6 @@ python manage.py runserver
 ## Ortam Değişkenleri
 
 Projenin çalışması için proje kök dizininde `.env` dosyası oluşturulmalıdır.
-
-`.env.example` dosyası örnek olarak verilmiştir.
 
 ```env
 SECRET_KEY=your_secret_key_here
