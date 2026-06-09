@@ -7,35 +7,44 @@
             <div class="card-body">
                 <h3 class="mb-4">Kayıt Ol</h3>
 
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+
                 <form method="post">
                     {% csrf_token %}
+
                     <div class="mb-3">
-    <label>Kullanıcı adı:</label>
-    {{ form.username }}
-</div>
+                        <label>Kullanıcı adı:</label>
+                        {{ form.username }}
+                    </div>
 
-<div class="mb-3">
-    <label>E-posta:</label>
-    {{ form.email }}
-</div>
+                    <div class="mb-3">
+                        <label>E-posta:</label>
+                        {{ form.email }}
+                    </div>
 
-<div class="mb-3">
-    <label>Parola:</label>
-    {{ form.password1 }}
+                    <div class="mb-3">
+                        <label>Parola:</label>
+                        {{ form.password1 }}
 
-    <small class="text-muted">
-        • En az 8 karakter kullanın<br>
-        • Harf ve rakam kombinasyonu önerilir<br>
-        • Güçlü parola hesabınızı korur
-    </small>
-</div>
+                        <small class="text-muted">
+                            • En az 8 karakter kullanın<br>
+                            • Harf ve rakam kombinasyonu önerilir<br>
+                            • Güçlü parola hesabınızı korur
+                        </small>
+                    </div>
 
-<div class="mb-3">
-    <label>Parola Onayı:</label>
-    {{ form.password2 }}
-</div>
+                    <div class="mb-3">
+                        <label>Parola Onayı:</label>
+                        {{ form.password2 }}
+                    </div>
 
-                    <button class="btn btn-dark w-100">Kayıt Ol</button>
+                    <button type="submit" class="btn btn-dark w-100">
+                        Kayıt Ol
+                    </button>
                 </form>
 
                 <p class="mt-3">

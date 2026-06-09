@@ -16,19 +16,62 @@
                     E-postanıza gönderilen 6 haneli kodu girin.
                 </p>
 
-                <input type="text"
-                       class="form-control mb-3"
-                       placeholder="6 haneli kod">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
-                <a href="{% url 'new_password' %}"
-                   class="btn btn-dark w-100">
-                    Doğrula
-                </a>
+                <form method="post">
+                    {% csrf_token %}
+
+                    <input
+                        type="text"
+                        name="code"
+                        class="form-control mb-3"
+                        placeholder="6 haneli kod"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="btn btn-dark w-100">
+                        Doğrula
+                    </button>
+
+                </form>
 
             </div>
         </div>
 
     </div>
 </div>
+<p class="text-muted mt-3">
+    Kalan süre: <span id="timer">03:00</span>
+</p>
+
+<script>
+let timeLeft = 180;
+
+const timer = document.getElementById("timer");
+
+const countdown = setInterval(function () {
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+
+    timer.textContent =
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0");
+
+    timeLeft--;
+
+    if (timeLeft < 0) {
+        clearInterval(countdown);
+        timer.textContent = "Süre doldu";
+    }
+}, 1000);
+</script>
 
 {% endblock %}
