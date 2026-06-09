@@ -36,10 +36,12 @@ python manage.py runserver
 
 ## Ortam Değişkenleri
 
-Projenin çalışması için `.env` dosyası oluşturulmalıdır.
+Projenin çalışması için proje kök dizininde `.env` dosyası oluşturulmalıdır.
 
-Örnek:
+`.env.example` dosyası örnek olarak verilmiştir.
 
 ```env
-SECRET_KEY=your_secret_key
-GROQ_API_KEY=your_api_key
+SECRET_KEY=your_secret_key_here
+GROQ_API_KEY=your_groq_api_key_here
+EMAIL_HOST_USER=your_email@gmail.com
+EMAIL_HOST_PASSWORD=your_gmail_app_password
